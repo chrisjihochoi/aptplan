@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>입주 자금 타임라인 · 제일풍경채 운정 811동 84C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#221e17;
+    --paper-2:#ece3d2;
+    --ink:#171510;
+    --ink-soft:#433d31;
+    --pine:#1c443b;
+    --pine-2:#23574a;
+    --amber:#9a5018;
+    --amber-soft:#e0a55a;
+    --amber-bright:#e7ad53;
+    --line:#c4b89c;
+    --good:#1f5244;
+    --warn:#933716;
+    --card:#fffefa;
+    --on-dark:#f2ece0;
+    --on-dark-soft:#c8c0af;
+    --shadow:0 1px 0 #fff inset, 0 18px 36px -22px #00000066;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'IBM Plex Sans KR',sans-serif;
+    background: var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    padding:clamp(18px,4vw,56px);
+    position:relative;
+  }
+  body::before{ content:none; }
+  .wrap{max-width:1040px;margin:0 auto;position:relative;z-index:1}
+
+  /* Header */
+  header{margin-bottom:34px}
+  .kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-bright);font-weight:600;margin-bottom:10px}
+  h1{font-family:'Gowun Batang',serif;font-weight:700;font-size:clamp(1.9rem,5vw,3rem);line-height:1.1;letter-spacing:-.01em;color:var(--on-dark)}
+  h1 .sub{display:block;font-size:.42em;font-weight:400;color:var(--on-dark-soft);letter-spacing:.04em;margin-top:12px;font-family:'IBM Plex Sans KR',sans-serif}
+  .rule{height:2px;background:linear-gradient(90deg,var(--pine),var(--amber) 60%,transparent);margin:22px 0 0;border-radius:2px}
+
+  /* Summary band */
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:30px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:var(--shadow)}
+  .stat .lab{font-size:.74rem;color:var(--ink-soft);letter-spacing:.02em;margin-bottom:8px}
+  .stat .val{font-family:'Gowun Batang',serif;font-size:1.7rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .stat .val small{font-size:.62em;font-weight:400;color:var(--ink-soft);margin-left:2px}
+  .stat.accent{background:var(--pine);border-color:var(--pine)}
+  .stat.accent .lab{color:#cfe0d9}
+  .stat.accent .val{color:#fdfaf0}
+  .stat .note{font-size:.7rem;color:var(--ink-soft);margin-top:6px}
+  .stat.accent .note{color:#bcd1c8}
+
+  /* Verdict */
+  .verdict{border-radius:16px;padding:20px 22px;margin:6px 0 30px;border:1px solid var(--line);display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--card);box-shadow:var(--shadow)}
+  .verdict .badge{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.4rem;padding:6px 16px;border-radius:999px;white-space:nowrap}
+  .verdict.ok .badge{background:#e4efe7;color:var(--good);border:1px solid #b9d4c4}
+  .verdict.no .badge{background:#f4e0d6;color:var(--warn);border:1px solid #e3bba6}
+  .verdict .msg{flex:1;min-width:240px;font-size:.95rem}
+  .verdict .msg b{font-variant-numeric:tabular-nums}
+  .bar{height:12px;border-radius:99px;background:var(--paper-2);overflow:hidden;border:1px solid var(--line);margin-top:12px;width:100%}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--pine-2),var(--amber-soft));transition:width .5s cubic-bezier(.2,.7,.2,1)}
+
+  /* Controls */
+  section.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:30px;box-shadow:var(--shadow)}
+  .panel h2,.tl-head h2{font-family:'Gowun Batang',serif;font-size:1.25rem;font-weight:700;margin-bottom:4px}
+  .panel .desc{font-size:.84rem;color:var(--ink-soft);margin-bottom:20px}
+  .controls{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 30px}
+  .ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:.86rem;font-weight:500;margin-bottom:9px}
+  .ctrl label .out{font-family:'Gowun Batang',serif;font-size:1.15rem;font-weight:700;color:var(--pine);font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;background:var(--paper-2);outline:none;border:1px solid var(--line)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--pine);border:3px solid var(--card);box-shadow:0 2px 6px #0003;cursor:pointer;transition:transform .15s}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--pine);border:3px solid var(--card);cursor:pointer}
+  .ctrl .hint{font-size:.72rem;color:var(--ink-soft);margin-top:7px}
+
+  /* Need / source breakdown */
+  .ledger{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:6px}
+  .ledger h3{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;font-weight:600}
+  .ledger.src h3{color:var(--pine-2)}
+  .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+  .row span:last-child{font-variant-numeric:tabular-nums;font-weight:500}
+  .row.total{border-bottom:none;border-top:2px solid var(--ink);margin-top:6px;padding-top:11px;font-family:'Gowun Batang',serif;font-weight:700;font-size:1.05rem}
+  .row .muted{color:var(--ink-soft);font-size:.78rem;font-weight:400}
+
+  /* Timeline */
+  .tl-head{margin-bottom:18px}
+  .tl-head .desc{font-size:.84rem;color:var(--ink-soft);margin-top:4px}
+  .timeline{position:relative}
+  .tl-item{display:grid;grid-template-columns:96px 1fr;gap:0;position:relative}
+  .tl-when{padding:18px 16px 18px 4px;text-align:right;position:relative}
+  .tl-when .mo{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.05rem;line-height:1.1}
+  .tl-when .yr{font-size:.68rem;color:var(--ink-soft);letter-spacing:.05em}
+  .tl-body{border-left:2px solid var(--line);padding:18px 0 18px 26px;position:relative}
+  .tl-body::before{content:"";position:absolute;left:-7px;top:23px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--pine)}
+  .tl-item.key .tl-body::before{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 4px #c8772e2e}
+  .tl-item.move .tl-body::before{background:var(--pine);border-color:var(--pine);box-shadow:0 0 0 5px #1f4a402e;width:14px;height:14px;left:-8px}
+  .tl-item:last-child .tl-body{border-left-color:transparent}
+  .tl-ev{font-size:.9rem;margin-bottom:8px}
+  .tl-ev strong{font-weight:600}
+  .tags{display:flex;gap:7px;flex-wrap:wrap}
+  .tag{font-size:.7rem;padding:3px 9px;border-radius:7px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tag.save{background:#e4efe7;color:var(--pine)}
+  .tag.in{background:#e9efd4;color:#414916;border:1px solid #cbd49a}
+  .tag.out{background:#f4e3d8;color:var(--warn)}
+  .tag.cum{background:var(--paper-2);color:var(--ink-soft)}
+  .tl-bal{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:13px;padding-top:11px;border-top:1.5px solid var(--line)}
+  .tl-bal .lbl{font-size:.74rem;color:var(--ink-soft);letter-spacing:.03em;font-weight:500}
+  .tl-bal .amt{font-family:'Gowun Batang',serif;font-weight:700;font-size:1.2rem;font-variant-numeric:tabular-nums;color:var(--pine);white-space:nowrap}
+  .tl-item.move .tl-bal .amt{font-size:1.45rem}
+  .tl-bal .amt.neg{color:var(--warn)}
+
+  footer{margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.16);font-size:.78rem;color:var(--on-dark-soft);line-height:1.75}
+  footer b{color:var(--on-dark);font-weight:600}
+
+  @media(max-width:720px){
+    .summary{grid-template-columns:repeat(2,1fr)}
+    .controls{grid-template-columns:1fr}
+    .ledger{grid-template-columns:1fr;gap:18px}
+    .tl-item{grid-template-columns:64px 1fr}
+    .tl-when{padding-right:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">입주 자금 계획 · 2026.06 → 2027.05</div>
+    <h1>제일풍경채 운정 입주 타임라인
+      <span class="sub">811동 84C · 분양가 5.4억 · 주식 매도 없이 입주하기</span>
+    </h1>
+    <div class="rule"></div>
+  </header>
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="stat">
+      <div class="lab">필요 자기현금 합계</div>
+      <div class="val" id="s-need">—</div>
+      <div class="note">잔금자기자금 + 중도금이자 + 취득세 + 인테리어</div>
+    </div>
+    <div class="stat">
+      <div class="lab">확보 재원</div>
+      <div class="val" id="s-src">—</div>
+      <div class="note">보증금 + 성과금 + 누적 적립</div>
+    </div>
+    <div class="stat accent">
+      <div class="lab">입주 후 남는 현금(버퍼)</div>
+      <div class="val" id="s-buf">—</div>
+      <div class="note" id="s-buf-note">비상금으로 확보</div>
+    </div>
+    <div class="stat">
+      <div class="lab">주담대 (LTV 70% 고정)</div>
+      <div class="val">3.78<small>억</small></div>
+      <div class="note">중도금→잔금 전환, 만기 30년</div>
+    </div>
+  </div>
+
+  <!-- VERDICT -->
+  <div class="verdict ok" id="verdict">
+    <div class="badge" id="v-badge">달성</div>
+    <div class="msg" id="v-msg"></div>
+    <div class="bar"><i id="v-bar" style="width:0%"></i></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <section class="panel">
+    <h2>가정값 조절</h2>
+    <p class="desc">슬라이더를 움직이면 위 요약과 아래 타임라인이 즉시 다시 계산됩니다. 월 소득 세후 1,000만(부부합산) · 현재 월세 110만 · 카드 약 450만 기준.</p>
+    <div class="controls">
+      <div class="ctrl">
+        <label>월 인테리어 적립액 <span class="out" id="o-save">250만</span></label>
+        <input type="range" id="r-save" min="0" max="400" step="10" value="250">
+        <div class="hint">2026.6~2027.3 (10개월) 적립. 카드값을 450→350으로 줄이면 월 100만이 더 확보됩니다.</div>
+      </div>
+      <div class="ctrl">
+        <label>3월 성과금 <span class="out" id="o-bonus">2,500만</span></label>
+        <input type="range" id="r-bonus" min="2000" max="3000" step="100" value="2500">
+        <div class="hint">2027년 3월 유입. 입주 직전이라 인테리어 핵심 재원입니다.</div>
+      </div>
+      <div class="ctrl">
+        <label>인테리어 목표 <span class="out" id="o-int">5,500만</span></label>
+        <input type="range" id="r-int" min="3000" max="7000" step="100" value="5500">
+        <div class="hint">표준형 상단(예비비 10% 포함). 신축이라 마루·욕실 교체는 권장 안 함.</div>
+      </div>
+      <div class="ctrl">
+        <label>중도금 후불이자(추정) <span class="out" id="o-mid">2,000만</span></label>
+        <input type="range" id="r-mid" min="1000" max="3000" step="100" value="2000">
+        <div class="hint">잔금 때 한 번에 정산. 정확한 금액은 중도금 대출 은행에서 조회하세요.</div>
+      </div>
+    </div>
+
+    <div class="ledger" style="margin-top:28px">
+      <div>
+        <h3>필요 자기현금</h3>
+        <div class="row"><span>잔금 자기자금 <span class="muted">(4.32억−대출 3.78억)</span></span><span id="l-balance">5,400만</span></div>
+        <div class="row"><span>중도금 후불이자</span><span id="l-mid">2,000만</span></div>
+        <div class="row"><span>취득세·등기 <span class="muted">(생애최초 감면 반영)</span></span><span>약 500만</span></div>
+        <div class="row"><span>인테리어 <span class="muted">(예비비 포함)</span></span><span id="l-int">5,500만</span></div>
+        <div class="row total"><span>합계</span><span id="l-need">1.34억</span></div>
+      </div>
+      <div class="src">
+        <h3>확보 재원</h3>
+        <div class="row"><span>현재 보증금 회수</span><span>1.00억</span></div>
+        <div class="row"><span>3월 성과금</span><span id="l-bonus">2,500만</span></div>
+        <div class="row"><span>월 적립 누적 <span class="muted">(10개월)</span></span><span id="l-saved">2,500만</span></div>
+        <div class="row total"><span>합계</span><span id="l-src">1.50억</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="panel">
+    <div class="tl-head">
+      <h2>월별 타임라인</h2>
+      <p class="desc">
+        <span class="tag save">적립</span>
+        <span class="tag in">현금 유입</span>
+        <span class="tag out">현금 유출</span>
+        <span class="tag cum">누적 적립</span>
+      </p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <footer>
+    <b>전제 ·</b> 파주 운정 = 수도권 비규제지역, 무주택·생애최초, 부부합산 소득 기준. 6.27 대책으로 생애최초 LTV는 80→70%로 강화되어 LTV 우대는 없으나 취득세 감면(최대 200만)은 적용됩니다. 주담대 만기 30년·6개월 내 전입 의무(실거주라 자동 충족).<br>
+    <b>주의 ·</b> 금리·규제·취득세·중도금 이자는 일반 기준 추정치입니다. 실행 전 ① 중도금 대출 은행에서 잔금일 기준 예상 후불이자, ② 주담대 사전한도·금리(고정/혼합/변동) 비교, ③ 정확한 전용면적 기준 취득세를 꼭 확인하세요. 저는 자격 있는 재무·세무 상담사가 아닙니다.<br>
+    <b>버퍼 원칙 ·</b> 보증금·성과금·적립을 전부 집에 넣더라도, 입주 후 월 잉여(약 300만)로 6개월치 비상금(약 3,000만)을 최우선 재적립한다는 전제에서 주식 유지가 안전합니다.
+  </footer>
+</div>
+
+<script>
+(function(){
+  // ---- fixed figures (만원 단위) ----
+  const PRICE = 54000;          // 분양가 5.4억
+  const LOAN  = 37800;          // 주담대 LTV70% 3.78억 (고정)
+  const PAID  = 10800;          // 계약금 20% 기납부
+  const REMAIN = PRICE - PAID;  // 43,200 (중도금+잔금)
+  const BALANCE_SELF = REMAIN - LOAN; // 5,400 잔금 자기자금
+  const ACQ = 500;              // 취득세·등기 (생애최초 감면 반영)
+  const DEPOSIT = 10000;        // 보증금 1억
+  const SAVE_MONTHS = 10;       // 2026.6~2027.3
+
+  const el = id => document.getElementById(id);
+
+  function fmt(man){ // 만원 -> 보기 좋은 문자열
+    if(Math.abs(man) >= 10000){
+      const eok = man/10000;
+      return (Math.round(eok*100)/100).toLocaleString('ko-KR') + '억';
+    }
+    return Math.round(man).toLocaleString('ko-KR') + '만';
+  }
+  function fmtMan(man){ return Math.round(man).toLocaleString('ko-KR') + '만'; }
+
+  // timeline event template (cumulative + tags filled in compute())
+  const EVENTS = [
+    {mo:'6월', yr:'2026', cls:'', save:true,
+      ev:'<strong>계획 시작.</strong> 인테리어 통장 개설. 중도금 대출 은행에 「잔금일 기준 예상 후불이자」 조회.'},
+    {mo:'7–8월', yr:'2026', cls:'key', save:true, span:2,
+      ev:'<strong>인테리어 견적 비교 시작.</strong> 84C 평면도 기준으로 업체 2~3곳에 견적 요청·비교, 후보 압축. 레퍼런스(붙박이·주방·조명·중문) 정리. 520세대 입주장이라 좋은 업체는 일찍 마감되니 미리 움직이는 게 유리.'},
+    {mo:'9–11월', yr:'2026', cls:'', save:true, span:3,
+      ev:'후보 업체와 디자인·견적 조율, 마음에 들면 시공 슬롯 가예약. 잔여 중도금 후불이자 누적 — 잔액 체크. 적립 지속.'},
+    {mo:'12월', yr:'2026', cls:'key', save:true,
+      ev:'<strong>연말 점검.</strong> 연금저축 납입 한도 확인(세액공제 1인 600만), 카드 사용 점검. 자재·마감 스펙 최종 확정.'},
+    {mo:'1월', yr:'2027', cls:'', save:true,
+      ev:'사전점검 일정 확인(시행사). 주담대 사전 상담·금리 비교(고정/혼합/변동).'},
+    {mo:'2월', yr:'2027', cls:'key', save:true,
+      ev:'<strong>사전점검 전후 실측 → 최종 견적 확정 → 본계약(계약금 약 10%).</strong> 적립 막바지.'},
+    {mo:'3월', yr:'2027', cls:'key', save:true, bonus:true,
+      ev:'<strong>★ 성과금 유입</strong> → 주택 자금으로 격리. 주담대 정식 신청. 월 적립도 지속.'},
+    {mo:'4월', yr:'2027', cls:'move', deposit:true, outBig:true,
+      ev:'<strong>입주(잔금) 정산.</strong> 보증금 회수 → 주담대 실행(중도금→잔금 전환) → 잔금·중도금이자·취득세 일괄 정산.'},
+    {mo:'5월', yr:'2027', cls:'move', outInt:true,
+      ev:'<strong>입주·인테리어 공사/잔금.</strong> 다음 달부터 월 잉여로 비상금(6개월치) 재적립 시작.'}
+  ];
+
+  function compute(){
+    const save  = +el('r-save').value;
+    const bonus = +el('r-bonus').value;
+    const intGoal = +el('r-int').value;
+    const mid   = +el('r-mid').value;
+
+    // outputs of controls
+    el('o-save').textContent = fmtMan(save);
+    el('o-bonus').textContent = fmtMan(bonus);
+    el('o-int').textContent = fmtMan(intGoal);
+    el('o-mid').textContent = fmtMan(mid);
+
+    const saved = save * SAVE_MONTHS;
+    const need = BALANCE_SELF + mid + ACQ + intGoal;
+    const src  = DEPOSIT + bonus + saved;
+    const buf  = src - need;
+
+    // summary
+    el('s-need').innerHTML = fmtHtml(need);
+    el('s-src').innerHTML  = fmtHtml(src);
+    el('s-buf').innerHTML  = (buf>=0?'+':'−') + fmtHtml(Math.abs(buf));
+
+    // ledger
+    el('l-mid').textContent = fmtMan(mid);
+    el('l-int').textContent = fmtMan(intGoal);
+    el('l-need').textContent = fmt(need);
+    el('l-bonus').textContent = fmtMan(bonus);
+    el('l-saved').textContent = fmtMan(saved);
+    el('l-src').textContent = fmt(src);
+
+    // verdict
+    const v = el('verdict'), badge = el('v-badge'), msg = el('v-msg'), bar = el('v-bar');
+    const pct = Math.max(0, Math.min(100, (src/need)*100));
+    bar.style.width = pct.toFixed(0)+'%';
+    if(buf >= 0){
+      v.className = 'verdict ok';
+      badge.textContent = '달성';
+      el('s-buf-note').textContent = '비상금으로 확보';
+      msg.innerHTML = `주식 매도 없이 목표를 채우고 <b>${fmtMan(buf)}원</b>이 남습니다. ` +
+        (buf>=3000
+          ? `6개월 비상금(약 3,000만)까지 한 번에 확보돼요.`
+          : `이 여윳돈은 입주 후 비상금 재적립의 출발점으로 두세요.`);
+    } else {
+      v.className = 'verdict no';
+      badge.textContent = '부족';
+      el('s-buf-note').textContent = '추가 필요';
+      const perMonthGap = Math.abs(buf)/SAVE_MONTHS;
+      msg.innerHTML = `현재 가정으론 <b>${fmtMan(Math.abs(buf))}원</b> 부족합니다. ` +
+        `월 적립을 <b>약 ${fmtMan(perMonthGap)}원</b> 더 늘리거나, 성과금을 상단으로 잡거나, 주식 일부를 정리하면 닫힙니다.`;
+    }
+
+    renderTimeline(save, bonus, intGoal, mid);
+  }
+
+  function fmtHtml(man){
+    if(Math.abs(man) >= 10000){
+      const eok = Math.round(man/10000*100)/100;
+      return eok.toLocaleString('ko-KR') + '<small>억</small>';
+    }
+    return Math.round(man).toLocaleString('ko-KR') + '<small>만</small>';
+  }
+
+  function renderTimeline(save, bonus, intGoal, mid){
+    const tl = el('timeline');
+    tl.innerHTML = '';
+    let bal = 0; // 월말 보유 현금 (주택 자금 풀)
+    EVENTS.forEach(e=>{
+      const span = e.span || 1;
+      let tags = '';
+      if(e.save){
+        const add = save*span;
+        bal += add;
+        tags += `<span class="tag save">적립 +${fmtMan(add)}${span>1?` (${fmtMan(save)}×${span})`:''}</span>`;
+      }
+      if(e.bonus){ bal += bonus; tags += `<span class="tag in">유입 성과금 +${fmtMan(bonus)}</span>`; }
+      if(e.deposit){ bal += DEPOSIT; tags += `<span class="tag in">유입 보증금 +1.00억</span>`; }
+      if(e.outBig){
+        const out = BALANCE_SELF + mid + ACQ;
+        bal -= out;
+        tags += `<span class="tag out">유출 잔금·이자·세금 −${fmt(out)}</span>`;
+      }
+      if(e.outInt){ bal -= intGoal; tags += `<span class="tag out">유출 인테리어 −${fmtMan(intGoal)}</span>`; }
+
+      const neg = bal < 0;
+      const item = document.createElement('div');
+      item.className = 'tl-item ' + (e.cls||'');
+      item.innerHTML = `
+        <div class="tl-when"><div class="mo">${e.mo}</div><div class="yr">${e.yr}</div></div>
+        <div class="tl-body">
+          <div class="tl-ev">${e.ev}</div>
+          <div class="tags">${tags}</div>
+          <div class="tl-bal">
+            <span class="lbl">월말 보유 현금 (주택 자금)</span>
+            <span class="amt ${neg?'neg':''}">${neg?'−':''}${fmt(Math.abs(bal))}</span>
+          </div>
+        </div>`;
+      tl.appendChild(item);
+    });
+  }
+
+  ['r-save','r-bonus','r-int','r-mid'].forEach(id=>{
+    el(id).addEventListener('input', compute);
+  });
+  compute();
+})();
+</script>
+</body>
+</html>
